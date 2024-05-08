@@ -5,7 +5,7 @@ library(tidyverse)
 library(partynat) #package made by Juraj Medzihorsky @jmedzihorsky on github
 library(fixest) #package for fixed effects estimation
 #Open Lok Dhaba dataset
-general_election <- read.csv("C:/Users/zacht/OneDrive - University College London/Documents/UCL/Year 3/Dissertation/Working Datasets/All_States_GE.csv")
+general_election <- read.csv("~/All_States_GE.csv")
 
 #Group results by year, party and constituency
 general_election <- general_election %>%
@@ -136,7 +136,7 @@ general_election_B_PNS_SUBNAT <- general_election_B_PNS[general_election_B_PNS$P
 #All 'State_Name' are modified so Karnataka is Mysore and Madras is renamed Tamil_Nadu
 
 ##Simultaneity variable
-dates <- read.csv("C:/Users/zacht/OneDrive - University College London/Documents/UCL/Year 3/Dissertation/Covariate data/election dates.csv")
+dates <- read.csv("~/Election dates.csv")
 dates$State_Name<-ifelse(dates$State_Name == "Mysore", "Karnataka",
                          ifelse(dates$State_Name == "Madras", "Tamil_Nadu", dates$State_Name))
 
@@ -146,7 +146,7 @@ general_election_B_PNS_NAT <- merge(general_election_B_PNS_NAT, dates, by.x = c(
 general_election_B_PNS_SUBNAT <- merge(general_election_B_PNS_SUBNAT, dates, by.x = c("State_Name", "Year"), by.y = c("State_Name", "Year"))
 
 ##Per capita income
-GSDP_per_cap <- read.csv("C:/Users/zacht/OneDrive - University College London/Documents/UCL/Year 3/Dissertation/Covariate data/GSDP Index.csv")
+GSDP_per_cap <- read.csv("~/GSDP Index.csv")
 GSDP_per_cap <- GSDP_per_cap %>%
   select("State_Name", "Year", "Per.capita.income")
 GSDP_per_cap$State_Name <- ifelse(GSDP_per_cap$State_Name == "Mysore", "Karnataka",
@@ -158,7 +158,7 @@ general_election_B_PNS_NAT <- merge(general_election_B_PNS_NAT, GSDP_per_cap, by
 general_election_B_PNS_SUBNAT <- merge(general_election_B_PNS_SUBNAT, GSDP_per_cap, by.x = c("State_Name", "Year"), by.y = c("State_Name", "Year"))
 
 ##Literacy rate
-literacy <- read.csv("C:/Users/zacht/OneDrive - University College London/Documents/UCL/Year 3/Dissertation/Covariate data/Statewise literacy (2).csv")
+literacy <- read.csv("~/Statewise literacy (2).csv")
 literacy <- literacy[literacy$Year %in%  c(1962, 1967, 1971, 1977, 1980, 1984, 1989, 1991, 1996, 1998, 1999, 2004, 2009, 2014, 2019),]
 literacy$State_Name <- ifelse(literacy$State_Name == "Mysore", "Karnataka",
                               ifelse(literacy$State_Name == "Madras", "Tamil_Nadu", literacy$State_Name))
@@ -169,7 +169,7 @@ general_election_B_PNS_NAT <- merge(general_election_B_PNS_NAT, literacy, by.x =
 general_election_B_PNS_SUBNAT <- merge(general_election_B_PNS_SUBNAT, literacy, by.x = c("State_Name", "Year"), by.y = c("State_Name", "Year"))
 
 ##Fiscal centralisation
-fiscal <- read.csv("C:/Users/zacht/OneDrive - University College London/Documents/UCL/Year 3/Dissertation/Covariate data/Fiscal centralisation 1980-2018.csv")
+fiscal <- read.csv("~/Fiscal centralisation 1980-2018.csv")
 fiscal <- fiscal[fiscal$Year %in%  c(1962, 1967, 1971, 1977, 1980, 1984, 1989, 1991, 1996, 1998, 1999, 2004, 2009, 2014, 2019),]
 fiscal$State_Name <- ifelse(fiscal$State_Name == "Mysore", "Karnataka",
                               ifelse(fiscal$State_Name == "Madras", "Tamil_Nadu", fiscal$State_Name))
